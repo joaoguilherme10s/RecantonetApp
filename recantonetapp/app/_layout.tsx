@@ -3,7 +3,7 @@ import { Stack } from 'expo-router';
 export default function Layout() {
   return (
     <Stack screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="index" />
+      <收获.Screen name="index" />
       <Stack.Screen name="dashboard" />
     </Stack>
   );

@@ -1,50 +1,40 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, TextInput, Alert } from 'react-native';
-import { useRouter } from 'expo-router';
+import { StyleSheet, Text, View, TouchableOpacity, TextInput, Alert, SafeAreaView, StatusBar } from 'react-native';
+import { router } from 'expo-router';
 
 export default function Login() {
-  const router = useRouter();
-  const [usuario, setUsuario] = useState('');
-  const [senha, setSenha] = useState('');
+  const [user, setUser] = useState('');
+  const [pass, setPass] = useState('');
 
-  const entrar = () => {
-    if (usuario === 'admin' && senha === '123') {
+  const handleLogin = () => {
+    if (user.toLowerCase() === 'admin' && pass === '123') {
       router.replace('/dashboard');
     } else {
-      Alert.alert("Erro", "Use: admin | Senha: 123");
+      Alert.alert("Erro", "Usuário ou senha incorretos.");
     }
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
+      <StatusBar barStyle="light-content" />
       <Text style={styles.logo}>RECANTO<Text style={{color: '#00D1B2'}}>NET</Text></Text>
-      
-      <TextInput 
-        style={styles.input} 
-        placeholder="Usuário" 
-        onChangeText={setUsuario}
-        placeholderTextColor="#666"
-      />
-      
-      <TextInput 
-        style={styles.input} 
-        placeholder="Senha" 
-        secureTextEntry 
-        onChangeText={setSenha}
-        placeholderTextColor="#666"
-      />
-      
-      <TouchableOpacity style={styles.button} onPress={entrar}>
-        <Text style={styles.buttonText}>ENTRAR</Text>
-      </TouchableOpacity>
-    </View>
+      <Text style={styles.subtitle}>Central do Assinante</Text>
+      <View style={{width: '100%'}}>
+        <TextInput style={styles.input} placeholder="Usuário" placeholderTextColor="#999" onChangeText={setUser} />
+        <TextInput style={styles.input} placeholder="Senha" placeholderTextColor="#999" secureTextEntry onChangeText={setPass} />
+        <TouchableOpacity style={styles.button} onPress={handleLogin}>
+          <Text style={styles.buttonText}>ACESSAR MINHA CONTA</Text>
+        </TouchableOpacity>
+      </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#0D1B2A', justifyContent: 'center', alignItems: 'center', padding: 20 },
-  logo: { fontSize: 32, fontWeight: 'bold', color: '#FFF', marginBottom: 40 },
-  input: { width: '100%', backgroundColor: '#FFF', padding: 15, borderRadius: 10, marginBottom: 15 },
-  button: { width: '100%', backgroundColor: '#00D1B2', padding: 15, borderRadius: 10, alignItems: 'center' },
-  buttonText: { fontWeight: 'bold', color: '#0D1B2A', fontSize: 16 }
+  container: { flex: 1, backgroundColor: '#0D1B2A', justifyContent: 'center', alignItems: 'center', padding: 30 },
+  logo: { fontSize: 38, fontWeight: 'bold', color: '#FFF' },
+  subtitle: { color: '#00D1B2', marginBottom: 40, fontSize: 16 },
+  input: { backgroundColor: '#FFF', padding: 18, borderRadius: 12, marginBottom: 15, fontSize: 16 },
+  button: { backgroundColor: '#00D1B2', padding: 18, borderRadius: 12, alignItems: 'center' },
+  buttonText: { color: '#0D1B2A', fontWeight: 'bold', fontSize: 15 }
 });
